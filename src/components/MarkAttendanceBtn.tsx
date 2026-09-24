@@ -1,42 +1,44 @@
-'use client';
+import { useState } from 'react'
+import { Plus, Check } from 'lucide-react'
+import { store, useStore } from '../lib/store'
+import { todayInput } from '../lib/attendance'
+import { useToast } from './Toast'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { addRecord } from '@/app/actions';
-import { Plus } from 'lucide-react';
-import { format } from 'date-fns';
-
+/**
+ * One tap marks today present. Idempotent by (subject, day): tapping again, or
+ * a second card for the same subject, updates the existing row instead of
+ * inserting a duplicate that would inflate every statistic in the app.
+ */
 export default function MarkAttendanceBtn({ subjectId, compact }: { subjectId: string; compact?: boolean }) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const { records } = useStore()
+  const toast = useToast()
+  const [busy, setBusy] = useState(false)
+  const today = todayInput()
+  const marked = records.some(
+    (r) => r.subject_id === subjectId && r.date === today && r.status === 'Attended',
+  )
 
-  const handleMark = async () => {
-    if (loading) return;
-    setLoading(true);
+  const handleMark = () => {
+    if (busy || marked) return
+    setBusy(true)
     try {
-      await addRecord({
-        subject_id: subjectId,
-        date: format(new Date(), 'yyyy-MM-dd'),
-        status: 'Attended',
-        notes: ''
-      });
-      router.refresh();
+      store.markPresent(subjectId)
     } catch (e) {
-      console.error(e);
+      toast(e instanceof Error ? e.message : 'Could not mark attendance.', 'error')
     } finally {
-      setLoading(false);
+      setBusy(false)
     }
-  };
+  }
 
   return (
     <button
       onClick={handleMark}
-      disabled={loading}
-      title="Mark present for today"
-      aria-label="Mark present"
-      className={`btn btn-secondary text-indigo-600 hover:text-indigo-700 gap-1 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 disabled:opacity-50 cursor-pointer ${compact ? 'w-full h-9' : ''}`}
+      disabled={busy || marked}
+      title={marked ? 'Already marked present today' : 'Mark present for today'}
+      aria-label={marked ? 'Present today' : 'Mark present'}
+      className={`btn btn-secondary text-indigo-600 hover:text-indigo-700 gap-1.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 disabled:opacity-60 disabled:cursor-default disabled:hover:bg-indigo-50 dark:disabled:hover:bg-indigo-500/10 ${compact ? 'w-full h-9' : ''}`}
     >
-      <Plus size={16} className={loading ? 'opacity-60' : ''} />
+      {marked ? <Check size={16} /> : <Plus size={16} />}
     </button>
-  );
+  )
 }

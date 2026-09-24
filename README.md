@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Attendly
 
-## Getting Started
+Attendly is my personal attendance tracker. It keeps track of subjects, recurring
+classes, and every attendance record, and shows what is at risk before the
+requirement is missed.
 
-First, run the development server:
+The app runs locally and keeps my data on my machine.
+
+## Tech stack
+
+* React and TypeScript
+* Vite
+* Tailwind CSS
+* Recharts
+* SQLite with `sql.js`
+* Vitest
+
+## Requirements
+
+* Node.js 22.12 or newer
+* npm
+
+## Setup
+
+Install the dependencies:
+
+```bash
+npm ci
+```
+
+## Run locally
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will run at the address shown in the terminal.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build the app:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the local production server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Useful commands
 
-## Deploy on Vercel
+```bash
+npm test          # run tests
+npm run typecheck # check TypeScript
+npm run build     # create production build
+npm run start     # run production server
+npm run verify    # typecheck + tests + build
+npm run audit     # dependency audit
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project layout
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* `src/` contains the React app and UI.
+* `src/components/` contains the main app components.
+* `src/lib/` contains the store, attendance math, and settings logic.
+* `data/` contains the local database.
+* `vite.config.ts` contains the dev-only SQLite mirror.
+
+## How storage works
+
+Browser storage is the source of truth: the app reads and writes it
+synchronously, so every screen updates the moment something is saved.
+
+During `npm run dev` a small Vite middleware mirrors that state to
+`data/attendly.db`, which makes the data readable and recoverable with ordinary
+SQLite tools. In a static production build the endpoint does not exist and the
+app runs on browser storage alone.
+
+**Settings → Export Data** writes the same state to a JSON file; **Import Data**
+restores it after validating every row, so a bad file can never half-overwrite
+your data.
+
+## Privacy
+
+Attendly collects nothing: no analytics, no tracking, no accounts, and no data
+leaves your machine. Everything lives in your browser and, in development, in
+`data/attendly.db`.
