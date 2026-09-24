@@ -59,7 +59,7 @@ npm test          # run tests
 npm run typecheck # check TypeScript
 npm run build     # create production build
 npm run start     # run production server
-npm run verify    # typecheck + tests + build
+npm run verify    # typecheck + tests + build — run this before pushing
 npm run audit     # dependency audit
 ```
 
