@@ -11,14 +11,13 @@ logs/
 *.log
 .tmp-*
 
-# Local data — the browser store is the source of truth, this is the local mirror.
-# The whole folder is ignored; the only file it should ever contain is
-# data/database.sqlite, which must never be committed.
-data/
+# The database itself is tracked. Everything else in data/ is runtime junk:
+# SQLite sidecar files and the temp file used for atomic writes.
+data/*
+!data/database.sqlite
 *.db
 *.db-wal
 *.db-shm
-*.sqlite
 *.sqlite-wal
 *.sqlite-shm
 *.sqlite.tmp
