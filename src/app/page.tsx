@@ -42,69 +42,61 @@ export default async function Dashboard() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div className="card flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
-              <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><TrendingUp size={14} /></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
+        <div className="card p-6">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400 font-medium">
+              <div className="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center"><TrendingUp size={16} /></div>
               Overall attendance
             </div>
-            <span className="text-slate-400">?</span>
+            <span className="text-slate-300 dark:text-slate-600 cursor-help" title="Percentage across all subjects">?</span>
           </div>
-          <div>
-            <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{overallPercentage}%</div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">Across all subjects</span>
-              <span className="text-emerald-500 font-medium">+2.4%</span>
-            </div>
+          <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">{overallPercentage}%</div>
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-500 dark:text-slate-400">Across all subjects</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-full">+2.4%</span>
           </div>
         </div>
 
-        <div className="card flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
-              <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><CheckCircle2 size={14} /></div>
+        <div className="card p-6">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400 font-medium">
+              <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center"><CheckCircle2 size={16} /></div>
               Classes attended
             </div>
           </div>
-          <div>
-            <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{attendedCount}</div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">of {totalConducted} conducted</span>
-              <span className="text-slate-500">This semester</span>
-            </div>
+          <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">{attendedCount}</div>
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-500 dark:text-slate-400">of {totalConducted} conducted</span>
+            <span className="text-slate-500 dark:text-slate-400">This semester</span>
           </div>
         </div>
 
-        <div className="card flex flex-col justify-between border-amber-200 dark:border-amber-900/50">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-sm text-amber-700 dark:text-amber-500 font-medium">
-              <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><AlertCircle size={14} /></div>
+        <div className="card p-6 border-amber-200 dark:border-amber-900/50">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2.5 text-sm text-amber-700 dark:text-amber-400 font-medium">
+              <div className="w-8 h-8 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center"><AlertCircle size={16} /></div>
               Classes missed
             </div>
           </div>
-          <div>
-            <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{missedCount}</div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">Keep an eye on these</span>
-              <span className="text-rose-500 font-medium">Review needed</span>
-            </div>
+          <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">{missedCount}</div>
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-500 dark:text-slate-400">Keep an eye on these</span>
+            <span className="text-rose-600 dark:text-rose-400 font-semibold bg-rose-50 dark:bg-rose-900/20 px-2 py-0.5 rounded-full">Review needed</span>
           </div>
         </div>
 
-        <div className="card flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
-              <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><Zap size={14} /></div>
+        <div className="card p-6">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400 font-medium">
+              <div className="w-8 h-8 rounded-full bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center"><Zap size={16} /></div>
               Current streak
             </div>
           </div>
-          <div>
-            <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">3 days</div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">Your best is 8 days</span>
-              <span className="text-emerald-500 font-medium">Keep it up</span>
-            </div>
+          <div className="text-4xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">3 days</div>
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-500 dark:text-slate-400">Your best is 8 days</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-full">Keep it up</span>
           </div>
         </div>
       </div>
