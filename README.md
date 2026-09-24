@@ -59,7 +59,7 @@ npm test          # run tests
 npm run typecheck # check TypeScript
 npm run build     # create production build
 npm run start     # run production server
-npm run verify    # typecheck + tests + build — run this before pushing
+npm run verify    # typecheck + tests + build
 npm run audit     # dependency audit
 ```
 
@@ -77,16 +77,16 @@ Browser storage is the source of truth: the app reads and writes it
 synchronously, so every screen updates the moment something is saved.
 
 During `npm run dev` a small Vite middleware mirrors that state to
-`data/database.sqlite`, which makes the data readable and recoverable with
-ordinary SQLite tools. In a static production build the endpoint does not exist
-and the app runs on browser storage alone.
+`data/database.sqlite`, so the data is readable and recoverable with ordinary
+SQLite tools. In a static production build the endpoint does not exist and the
+app runs on browser storage alone.
 
-**Settings → Export Data** writes the same state to a JSON file; **Import Data**
-restores it after validating every row, so a bad file can never half-overwrite
-your data.
+**Settings → Export Data** writes the same state to a JSON file, and **Import
+Data** restores it after checking every row, so a bad file can never
+half-overwrite your data.
 
 ## Privacy
 
-Attendly collects nothing: no analytics, no tracking, no accounts, and no data
-leaves your machine. Everything lives in your browser and, in development, in
+Attendly collects nothing: no analytics, no tracking, and no accounts. Your
+attendance data stays in your browser and, in development, in
 `data/database.sqlite`.
