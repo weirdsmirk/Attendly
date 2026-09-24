@@ -15,6 +15,7 @@ const db = new Database(dbPath);
 
 // Initialize schema
 db.pragma('journal_mode = WAL');
+db.pragma('foreign_keys = ON');
 
 const initSchema = () => {
   db.exec(`
