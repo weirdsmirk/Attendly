@@ -20,8 +20,8 @@ export default function SubjectDetailsModal({
   const [loading, setLoading] = useState(false);
 
   const subRecords = records.filter(r => r.subject_id === subject.id);
-  const subConducted = subRecords.length;
-  const subAttended = subRecords.filter(r => r.status === 'Attended').length;
+  const subConducted = subRecords.filter(r => r.status === 'Attended' || r.status === 'Skipped').length + subject.initial_conducted;
+  const subAttended = subRecords.filter(r => r.status === 'Attended').length + subject.initial_attended;
   const subPerc = subConducted === 0 ? 100 : Math.round((subAttended / subConducted) * 100);
 
   let safeSkips = 0;

@@ -16,9 +16,9 @@ export default function SubjectGrid({ subjects, records }: { subjects: Subject[]
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {subjects.map(sub => {
           const subRecords = records.filter(r => r.subject_id === sub.id);
-          const subConducted = subRecords.length;
-          const subAttended = subRecords.filter(r => r.status === 'Attended').length;
-          const subMissed = subRecords.filter(r => r.status === 'Skipped').length;
+          const subConducted = subRecords.filter(r => r.status === 'Attended' || r.status === 'Skipped').length + sub.initial_conducted;
+          const subAttended = subRecords.filter(r => r.status === 'Attended').length + sub.initial_attended;
+          const subMissed = subRecords.filter(r => r.status === 'Skipped').length + (sub.initial_conducted - sub.initial_attended);
           const subPerc = subConducted === 0 ? 100 : Math.round((subAttended / subConducted) * 100);
           
           let safeSkips = 0;

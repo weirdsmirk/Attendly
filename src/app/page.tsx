@@ -12,9 +12,16 @@ export default async function Dashboard() {
   const timetable = await getTimetable();
 
   // Basic stats
-  const totalConducted = records.length;
-  const attendedCount = records.filter(r => r.status === 'Attended').length;
-  const missedCount = records.filter(r => r.status === 'Skipped').length;
+  const initialConductedTotal = subjects.reduce((sum, s) => sum + s.initial_conducted, 0);
+  const initialAttendedTotal = subjects.reduce((sum, s) => sum + s.initial_attended, 0);
+  
+  const recordsConducted = records.filter(r => r.status === 'Attended' || r.status === 'Skipped').length;
+  const recordsAttended = records.filter(r => r.status === 'Attended').length;
+  
+  const totalConducted = recordsConducted + initialConductedTotal;
+  const attendedCount = recordsAttended + initialAttendedTotal;
+  const missedCount = records.filter(r => r.status === 'Skipped').length + (initialConductedTotal - initialAttendedTotal);
+  
   const overallPercentage = totalConducted === 0 ? 100 : Math.round((attendedCount / totalConducted) * 100);
 
   // Today's classes
@@ -168,8 +175,8 @@ export default async function Dashboard() {
           <div className="space-y-4">
             {subjects.map(sub => {
               const subRecords = records.filter(r => r.subject_id === sub.id);
-              const subConducted = subRecords.length;
-              const subAttended = subRecords.filter(r => r.status === 'Attended').length;
+              const subConducted = subRecords.filter(r => r.status === 'Attended' || r.status === 'Skipped').length + sub.initial_conducted;
+              const subAttended = subRecords.filter(r => r.status === 'Attended').length + sub.initial_attended;
               const subPerc = subConducted === 0 ? 100 : Math.round((subAttended / subConducted) * 100);
               
               // Math for safe skips

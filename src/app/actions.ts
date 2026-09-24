@@ -12,6 +12,8 @@ export type Subject = {
   credits: number;
   min_attendance_req: number;
   color: string;
+  initial_conducted: number;
+  initial_attended: number;
   created_at: string;
 };
 
@@ -44,10 +46,10 @@ export async function getSubjects(): Promise<Subject[]> {
 export async function addSubject(data: Omit<Subject, 'id' | 'created_at'>) {
   const id = randomUUID();
   const stmt = db.prepare(`
-    INSERT INTO subjects (id, name, code, teacher, credits, min_attendance_req, color)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO subjects (id, name, code, teacher, credits, min_attendance_req, color, initial_conducted, initial_attended)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
-  stmt.run(id, data.name, data.code, data.teacher, data.credits, data.min_attendance_req, data.color);
+  stmt.run(id, data.name, data.code, data.teacher, data.credits, data.min_attendance_req, data.color, data.initial_conducted, data.initial_attended);
   revalidatePath('/');
   revalidatePath('/subjects');
   return id;
@@ -67,7 +69,7 @@ export async function deleteSubject(id: string) {
 export async function getTimetable(): Promise<(TimetableClass & { subject: Subject })[]> {
   const stmt = db.prepare(`
     SELECT t.*, 
-           s.name as s_name, s.code as s_code, s.teacher as s_teacher, s.credits as s_credits, s.min_attendance_req as s_min_req, s.color as s_color, s.created_at as s_created_at
+           s.name as s_name, s.code as s_code, s.teacher as s_teacher, s.credits as s_credits, s.min_attendance_req as s_min_req, s.color as s_color, s.initial_conducted as s_initial_conducted, s.initial_attended as s_initial_attended, s.created_at as s_created_at
     FROM timetable t
     JOIN subjects s ON t.subject_id = s.id
     ORDER BY t.day_of_week ASC, t.start_time ASC
@@ -89,6 +91,8 @@ export async function getTimetable(): Promise<(TimetableClass & { subject: Subje
       credits: r.s_credits,
       min_attendance_req: r.s_min_req,
       color: r.s_color,
+      initial_conducted: r.s_initial_conducted,
+      initial_attended: r.s_initial_attended,
       created_at: r.s_created_at
     }
   }));
@@ -116,7 +120,7 @@ export async function deleteTimetableClass(id: string) {
 export async function getRecords(): Promise<(AttendanceRecord & { subject: Subject })[]> {
   const stmt = db.prepare(`
     SELECT a.*, 
-           s.name as s_name, s.code as s_code, s.teacher as s_teacher, s.credits as s_credits, s.min_attendance_req as s_min_req, s.color as s_color, s.created_at as s_created_at
+           s.name as s_name, s.code as s_code, s.teacher as s_teacher, s.credits as s_credits, s.min_attendance_req as s_min_req, s.color as s_color, s.initial_conducted as s_initial_conducted, s.initial_attended as s_initial_attended, s.created_at as s_created_at
     FROM attendance_records a
     JOIN subjects s ON a.subject_id = s.id
     ORDER BY a.date DESC, a.created_at DESC
@@ -137,6 +141,8 @@ export async function getRecords(): Promise<(AttendanceRecord & { subject: Subje
       credits: r.s_credits,
       min_attendance_req: r.s_min_req,
       color: r.s_color,
+      initial_conducted: r.s_initial_conducted,
+      initial_attended: r.s_initial_attended,
       created_at: r.s_created_at
     }
   }));

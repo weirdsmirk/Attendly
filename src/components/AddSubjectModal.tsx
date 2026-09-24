@@ -12,6 +12,8 @@ export default function AddSubjectModal({ onClose }: { onClose: () => void }) {
     teacher: '',
     credits: 3,
     min_attendance_req: 75,
+    initial_conducted: 0,
+    initial_attended: 0,
     color: '#4F46E5'
   });
 
@@ -53,12 +55,22 @@ export default function AddSubjectModal({ onClose }: { onClose: () => void }) {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">Credits</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Credits</label>
               <input type="number" min="1" max="10" className="input" value={formData.credits} onChange={e => setFormData({...formData, credits: parseInt(e.target.value)})} />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">Min Attendance (%)</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Min Attendance (%)</label>
               <input type="number" min="1" max="100" className="input" value={formData.min_attendance_req} onChange={e => setFormData({...formData, min_attendance_req: parseInt(e.target.value)})} />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Initial Conducted</label>
+              <input type="number" min="0" className="input" value={formData.initial_conducted} onChange={e => setFormData({...formData, initial_conducted: parseInt(e.target.value)})} />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Initial Attended</label>
+              <input type="number" min="0" className="input" value={formData.initial_attended} onChange={e => setFormData({...formData, initial_attended: parseInt(e.target.value)})} />
             </div>
           </div>
           <div>

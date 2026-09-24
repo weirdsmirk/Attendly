@@ -26,6 +26,8 @@ const initSchema = () => {
       credits INTEGER DEFAULT 3,
       min_attendance_req INTEGER DEFAULT 75,
       color TEXT DEFAULT '#4F46E5',
+      initial_conducted INTEGER DEFAULT 0,
+      initial_attended INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
