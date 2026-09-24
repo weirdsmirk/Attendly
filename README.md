@@ -68,7 +68,7 @@ npm run audit     # dependency audit
 * `src/` contains the React app and UI.
 * `src/components/` contains the main app components.
 * `src/lib/` contains the store, attendance math, and settings logic.
-* `data/` contains the local database.
+* `data/` contains the local database, `data/database.sqlite`.
 * `vite.config.ts` contains the dev-only SQLite mirror.
 
 ## How storage works
@@ -77,9 +77,9 @@ Browser storage is the source of truth: the app reads and writes it
 synchronously, so every screen updates the moment something is saved.
 
 During `npm run dev` a small Vite middleware mirrors that state to
-`data/attendly.db`, which makes the data readable and recoverable with ordinary
-SQLite tools. In a static production build the endpoint does not exist and the
-app runs on browser storage alone.
+`data/database.sqlite`, which makes the data readable and recoverable with
+ordinary SQLite tools. In a static production build the endpoint does not exist
+and the app runs on browser storage alone.
 
 **Settings → Export Data** writes the same state to a JSON file; **Import Data**
 restores it after validating every row, so a bad file can never half-overwrite
@@ -89,4 +89,4 @@ your data.
 
 Attendly collects nothing: no analytics, no tracking, no accounts, and no data
 leaves your machine. Everything lives in your browser and, in development, in
-`data/attendly.db`.
+`data/database.sqlite`.

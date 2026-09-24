@@ -9,7 +9,8 @@ import type { Database, SqlJsStatic } from 'sql.js'
 
 const root = path.dirname(fileURLToPath(import.meta.url))
 const DATA_DIR = path.join(root, 'data')
-const DB_PATH = path.join(DATA_DIR, 'attendly.db')
+/** The single database file. Nothing else is written to `data/`. */
+const DB_PATH = path.join(DATA_DIR, 'database.sqlite')
 const ENDPOINT = '/__data/attendly'
 
 /**
@@ -69,7 +70,7 @@ function num(value: unknown, fallback = 0): number {
   return Number.isFinite(n) ? Math.trunc(n) : fallback
 }
 
-/** Dev-only mirror between the browser store and data/attendly.db.
+/** Dev-only mirror between the browser store and data/database.sqlite.
  *  Mirrors CineTrack: the app works entirely from localStorage in a static
  *  production build; this endpoint only exists under `vite dev`. */
 function dataMirror(): Plugin {

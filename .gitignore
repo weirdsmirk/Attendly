@@ -11,12 +11,17 @@ logs/
 *.log
 .tmp-*
 
-# Local data — the browser store is the source of truth, this is the local mirror
-data/*.db
-data/*.db-wal
-data/*.db-shm
-data/*.db.tmp
+# Local data — the browser store is the source of truth, this is the local mirror.
+# The whole folder is ignored; the only file it should ever contain is
+# data/database.sqlite, which must never be committed.
+data/
 *.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite.tmp
 coverage/
 .DS_Store
 .next/
