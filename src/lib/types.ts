@@ -35,7 +35,6 @@ export type AttendanceRecord = {
   created_at: string
 }
 
-export type TimetableClassWithSubject = TimetableClass & { subject: Subject }
 export type AttendanceRecordWithSubject = AttendanceRecord & { subject: Subject }
 
 export type Snapshot = {

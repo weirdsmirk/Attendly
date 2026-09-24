@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { attendanceTrend } from '../lib/attendance'
+import type { AttendanceRecord } from '../lib/types'
 
 function subscribeTheme(cb: () => void) {
   const observer = new MutationObserver(cb)
@@ -16,16 +17,13 @@ function subscribeTheme(cb: () => void) {
   return () => observer.disconnect()
 }
 
-export default function AttendanceChart({ records }: { records: readonly unknown[] }) {
+export default function AttendanceChart({ records }: { records: readonly AttendanceRecord[] }) {
   const isDark = useSyncExternalStore(
     subscribeTheme,
     () => document.documentElement.classList.contains('dark'),
     () => false,
   )
-  const data = useMemo(
-    () => attendanceTrend(records as never[]),
-    [records],
-  )
+  const data = useMemo(() => attendanceTrend(records), [records])
   const isEmpty = data.length === 0
 
   const grid = isDark ? '#1e293b' : '#e2e8f0'
