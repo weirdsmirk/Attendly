@@ -52,8 +52,23 @@ export async function addSubject(data: Omit<Subject, 'id' | 'created_at'>) {
   stmt.run(id, data.name, data.code, data.teacher, data.credits, data.min_attendance_req, data.color, data.initial_conducted, data.initial_attended);
   revalidatePath('/');
   revalidatePath('/subjects');
+  revalidatePath('/timetable');
   return id;
 }
+
+export async function updateSubject(id: string, data: Omit<Subject, 'id' | 'created_at'>) {
+  const stmt = db.prepare(`
+    UPDATE subjects 
+    SET name = ?, code = ?, teacher = ?, credits = ?, min_attendance_req = ?, color = ?, initial_conducted = ?, initial_attended = ?
+    WHERE id = ?
+  `);
+  stmt.run(data.name, data.code, data.teacher, data.credits, data.min_attendance_req, data.color, data.initial_conducted, data.initial_attended, id);
+  revalidatePath('/');
+  revalidatePath('/subjects');
+  revalidatePath('/timetable');
+}
+
+
 
 export async function deleteSubject(id: string) {
   const stmt = db.prepare('DELETE FROM subjects WHERE id = ?');
@@ -167,4 +182,23 @@ export async function deleteRecord(id: string) {
   revalidatePath('/');
   revalidatePath('/history');
   revalidatePath('/subjects');
+}
+
+export async function addClass(data: Omit<TimetableClass, 'id'>) {
+  const id = randomUUID();
+  const stmt = db.prepare(`
+    INSERT INTO timetable (id, subject_id, day_of_week, start_time, end_time, room, type)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `);
+  stmt.run(id, data.subject_id, data.day_of_week, data.start_time, data.end_time, data.room, data.type);
+  revalidatePath('/');
+  revalidatePath('/timetable');
+  return id;
+}
+
+export async function deleteClass(id: string) {
+  const stmt = db.prepare('DELETE FROM timetable WHERE id = ?');
+  stmt.run(id);
+  revalidatePath('/');
+  revalidatePath('/timetable');
 }

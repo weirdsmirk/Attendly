@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, ListOrdered, CalendarDays, BookOpen, Settings, HelpCircle, Zap, MoreHorizontal, X, Database, Download, Upload } from 'lucide-react';
+import { LayoutDashboard, ListOrdered, CalendarDays, BookOpen, Settings, HelpCircle, Zap, X, Download, Upload } from 'lucide-react';
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -17,33 +17,16 @@ const manageItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
   return (
     <>
       <div className="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-full shrink-0">
-        <div className="p-6 flex items-center gap-2">
+        <div className="p-6 flex items-center gap-2 mb-4">
           <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">
             <Zap size={18} />
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Attendly</span>
-        </div>
-
-        <div className="px-6 py-4">
-          <button 
-            onClick={() => setShowProfile(true)}
-            className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 w-full text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group"
-          >
-            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 flex items-center justify-center font-semibold text-sm">
-              AR
-            </div>
-            <div className="flex flex-col flex-1 min-w-0">
-              <span className="text-sm font-semibold text-slate-900 dark:text-white truncate">Alex Rivera</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400 truncate">Computer Science · Year 2</span>
-            </div>
-            <MoreHorizontal size={14} className="text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
         </div>
 
         <div className="flex-1 px-4 space-y-8 overflow-y-auto mt-2">
@@ -114,48 +97,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
-      {/* Profile Modal */}
-      {showProfile && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4" onClick={() => setShowProfile(false)}>
-          <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-sm border border-slate-200 dark:border-slate-800 overflow-hidden" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-5 border-b border-slate-100 dark:border-slate-800">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">Profile</h2>
-              <button onClick={() => setShowProfile(false)} className="p-1.5 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
-                <X size={18} />
-              </button>
-            </div>
-            <div className="p-5">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 flex items-center justify-center font-bold text-xl">
-                  AR
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">Alex Rivera</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Computer Science · Year 2</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-800">
-                  <span className="text-sm text-slate-500 dark:text-slate-400">Student ID</span>
-                  <span className="text-sm font-medium text-slate-900 dark:text-white">CS2024-0042</span>
-                </div>
-                <div className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-800">
-                  <span className="text-sm text-slate-500 dark:text-slate-400">Semester</span>
-                  <span className="text-sm font-medium text-slate-900 dark:text-white">4th Semester</span>
-                </div>
-                <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-slate-500 dark:text-slate-400">Data storage</span>
-                  <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
-                    <Database size={14} />
-                    Local SQLite
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Settings Modal */}
       {showSettings && (
