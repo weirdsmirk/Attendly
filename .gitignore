@@ -11,15 +11,20 @@ logs/
 *.log
 .tmp-*
 
-# The database itself is tracked. Everything else in data/ is runtime junk:
-# SQLite sidecar files and the temp file used for atomic writes.
-data/*
-!data/database.sqlite
+# User data stays on the device and is never committed. This covers the local
+# database in data/, its SQLite sidecar files, and the temp file used for
+# atomic writes. The dev server recreates data/ on first run, so nothing needs
+# to be tracked for the app to work. The patterns below also catch a stray
+# database outside data/.
+data/
 *.db
 *.db-wal
 *.db-shm
+*.db-journal
+*.sqlite
 *.sqlite-wal
 *.sqlite-shm
+*.sqlite-journal
 *.sqlite.tmp
 coverage/
 .DS_Store

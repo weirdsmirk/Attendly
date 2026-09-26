@@ -68,7 +68,8 @@ npm run audit     # dependency audit
 * `src/` contains the React app and UI.
 * `src/components/` contains the main app components.
 * `src/lib/` contains the store, attendance math, and settings logic.
-* `data/` contains the local database, `data/database.sqlite`.
+* `data/` contains the local database, `data/database.sqlite`. It is created on
+  first run and is never committed.
 * `vite.config.ts` contains the dev-only SQLite mirror.
 
 ## How storage works
@@ -90,6 +91,12 @@ half-overwrite your data.
 Attendly collects nothing: no analytics, no tracking, and no accounts. Your
 attendance data stays in your browser and, in development, in
 `data/database.sqlite`.
+
+That data is local to your device only. The whole `data/` directory is ignored
+by git, so the database and its SQLite sidecar files are never committed or
+pushed. Keep it that way: do not remove `data/` from `.gitignore`, and do not
+commit an exported backup. If you want to share a fix, open a pull request for
+the code only.
 
 ## License
 
