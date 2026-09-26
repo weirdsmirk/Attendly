@@ -90,3 +90,9 @@ half-overwrite your data.
 Attendly collects nothing: no analytics, no tracking, and no accounts. Your
 attendance data stays in your browser and, in development, in
 `data/database.sqlite`.
+
+## License
+
+Attendly is open source under the [MIT License](LICENSE). You can use, modify,
+and redistribute it, including commercially, as long as you keep the copyright
+notice.
